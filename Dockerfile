@@ -29,7 +29,10 @@ RUN cp /app/searxng-moritzsoft/assets/favicon.svg /opt/searxng-moritzsoft/searx/
     cp /app/searxng-moritzsoft/assets/empty_favicon.svg /opt/searxng-moritzsoft/searx/static/themes/simple/img/empty_favicon.svg && \
     cp /app/searxng-moritzsoft/brand/searxng.svg /opt/searxng-moritzsoft/searx/static/themes/simple/img/searxng.svg
 
-# Inject full Moritzsoft UI (CSS override + particle canvas JS)
+# Copy logo PNG for UI
+RUN cp /app/searxng-moritzsoft/assets/moritzsoft-logo.png /opt/searxng-moritzsoft/searx/static/themes/simple/img/moritzsoft-logo.png
+
+# Inject full Moritzsoft UI (CSS override + UI JS with particles, nav, footer, logo)
 RUN chmod +x /app/searxng-moritzsoft/scripts/inject-moritzsoft.sh && \
     /app/searxng-moritzsoft/scripts/inject-moritzsoft.sh /opt/searxng-moritzsoft
 

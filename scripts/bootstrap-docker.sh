@@ -37,12 +37,10 @@ if [ -f "$SETTINGS_PATH" ]; then
   sed -i "s/image_proxy: false/image_proxy: true/g" "$SETTINGS_PATH"
   sed -i "s/limiter: true/limiter: false/g" "$SETTINGS_PATH"
 
-  # Set privacy policy URL
   if grep -q "privacypolicy_url:" "$SETTINGS_PATH"; then
     sed -i 's|privacypolicy_url:.*|privacypolicy_url: https://rechtliches.moritzsoft.de|g' "$SETTINGS_PATH"
   fi
 
-  # Center alignment
   if grep -q "center_alignment:" "$SETTINGS_PATH"; then
     sed -i "s/center_alignment: .*/center_alignment: true/g" "$SETTINGS_PATH"
   else
@@ -74,10 +72,8 @@ fi
 
 echo "Applying MoritzSoft theme..."
 
-# Copy definitions.less (the core theme file that changes all colors)
 cp /app/searxng-moritzsoft/theme/moritzsoft/definitions.less "$INSTALL_PATH/searx/static/themes/simple/less/" 2>/dev/null || true
 
-# Copy branding
 if [ -f "/app/searxng-moritzsoft/brand/searxng.svg" ]; then
   cp /app/searxng-moritzsoft/brand/searxng.svg "$INSTALL_PATH/searx/static/themes/simple/img/searxng.svg" 2>/dev/null || true
 fi
@@ -88,6 +84,12 @@ fi
 
 if [ -f "/app/searxng-moritzsoft/assets/empty_favicon.svg" ]; then
   cp /app/searxng-moritzsoft/assets/empty_favicon.svg "$INSTALL_PATH/searx/static/themes/simple/img/empty_favicon.svg"
+fi
+
+# Copy moritzsoft logo
+if [ -f "/app/searxng-moritzsoft/assets/moritzsoft-logo.png" ]; then
+  cp /app/searxng-moritzsoft/assets/moritzsoft-logo.png "$INSTALL_PATH/searx/static/themes/simple/img/moritzsoft-logo.png"
+  echo "  Copied moritzsoft logo"
 fi
 
 echo "Bootstrap complete!"

@@ -1,9 +1,9 @@
 /*
- * MoritzSoft Search - Full Visual Override
- * Transforms SearXNG into the moritzsoft.de aesthetic
+ * MoritzSoft Search — Full Custom UI
+ * 1:1 moritzsoft.de Design auf SearXNG
  * 
  * Colors: #08080a bg, #111114 cards, #8c52ff purple, #ff914d orange
- * Style: Glassmorphism, Inter font, particle canvas background
+ * Style: Glassmorphism, Inter font, particle canvas, floating pill nav
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
@@ -13,35 +13,47 @@
 /* ================================================= */
 
 :root {
-    --ms-bg-main: #08080a;
-    --ms-bg-secondary: #111114;
-    --ms-gradient: linear-gradient(135deg, #8c52ff 0%, #ff914d 100%);
-    --ms-purple: #8c52ff;
-    --ms-orange: #ff914d;
-    --ms-text-primary: #a6a6a6;
-    --ms-text-secondary: #75757a;
-    --ms-text-bright: #dedede;
-    --ms-glass-bg: rgba(255, 255, 255, 0.03);
-    --ms-glass-border: rgba(255, 255, 255, 0.08);
-    --ms-glass-blur: blur(20px);
-    --ms-transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    --ms-radius: 16px;
+    --bg-main: #08080a;
+    --bg-secondary: #111114;
+    --gradient-accent: linear-gradient(135deg, #8c52ff 0%, #ff914d 100%);
+    --color-purple: #8c52ff;
+    --color-orange: #ff914d;
+    --text-primary: #a6a6a6;
+    --text-secondary: #75757a;
+    --text-bright: #dedede;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(20px);
+    --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --radius: 16px;
+    --nav-height: 70px;
 }
 
 /* ================================================= */
-/* === GLOBAL RESET ================================ */
+/* === GLOBAL NUKE ================================= */
 /* ================================================= */
 
+*, *::before, *::after {
+    box-sizing: border-box !important;
+}
+
 html, body {
-    background: var(--ms-bg-main) !important;
-    color: var(--ms-text-primary) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--bg-main) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-    background-image: radial-gradient(circle at top right, rgba(140, 82, 255, 0.08), transparent 40%),
-                      radial-gradient(circle at bottom left, rgba(255, 145, 77, 0.04), transparent 40%) !important;
+    line-height: 1.6 !important;
+    overflow-x: hidden !important;
+    background-image: radial-gradient(circle at top right, rgba(140, 82, 255, 0.1), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(255, 145, 77, 0.05), transparent 40%) !important;
     background-attachment: fixed !important;
 }
 
-/* Particle canvas */
+/* ================================================= */
+/* === PARTICLE CANVAS ============================= */
+/* ================================================= */
+
 #ms-canvas {
     position: fixed;
     top: 0;
@@ -49,121 +61,232 @@ html, body {
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.5;
+    opacity: 0.6;
     pointer-events: none;
 }
 
 /* ================================================= */
-/* === HEADER / NAVBAR ============================= */
+/* === GLASS NAV (moritzsoft.de style) ============= */
 /* ================================================= */
 
+/* Kill default SearXNG header completely */
 .search_header,
 #search_header,
-nav,
 header,
-.navbar {
-    background: rgba(10, 10, 12, 0.6) !important;
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    border-bottom: 1px solid var(--ms-glass-border) !important;
-    box-shadow: none !important;
+.navbar,
+nav {
+    all: unset !important;
+    display: block !important;
 }
 
-/* SearXNG search form header area */
-#main_index, .index {
-    background: transparent !important;
+/* Our custom nav is injected via JS as #ms-nav */
+#ms-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    height: var(--nav-height);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+    background: rgba(10, 10, 12, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    transition: var(--transition-smooth);
 }
 
-/* ================================================= */
-/* === LOGO / BRANDING ============================= */
-/* ================================================= */
-
-/* Hide default SearXNG logo image and replace with text */
-.searxng-logo,
-#main_index .logo img,
-.index .logo img,
-.logo img {
-    display: none !important;
+#ms-nav.scrolled {
+    top: 10px;
+    width: 95%;
+    background: rgba(10, 10, 12, 0.85);
 }
 
-.logo, .searxng_logo {
-    position: relative;
+#ms-nav .nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.logo::after,
-.searxng_logo::after {
-    content: 'MoritzSoft Search';
-    font-family: 'Inter', sans-serif;
-    font-size: 2rem;
+#ms-nav .logo-text {
+    font-size: 1.5rem;
     font-weight: 900;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #75757a 0%, #75757a 40%, #8c52ff 40%, #ff914d 65%, #75757a 65%, #75757a 100%);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+#ms-nav .logo-text .gradient-text {
+    background: var(--gradient-accent);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    display: inline;
+}
+
+#ms-nav .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+#ms-nav .nav-links a {
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+#ms-nav .nav-links a:hover,
+#ms-nav .nav-links a.active {
+    color: var(--text-primary) !important;
+}
+
+/* ================================================= */
+/* === HIDE DEFAULT SEARXNG CHROME ================= */
+/* ================================================= */
+
+/* Nuke all default SearXNG navigation/header elements */
+.search_header,
+#search_header,
+.searxng-navbar,
+.navbar-default,
+.autocomplete,
+#categories_container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ================================================= */
+/* === INDEX / HOME PAGE =========================== */
+/* ================================================= */
+
+#main_index,
+.index {
+    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding-top: calc(var(--nav-height) + 60px) !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo area — replace default with our PNG */
+.searxng-logo,
+#main_index .logo,
+.index .logo,
+.logo {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px !important;
+    background: none !important;
+}
+
+/* Hide default SVG/img */
+.searxng-logo img,
+#main_index .logo img,
+.index .logo img,
+.logo img:not(#ms-logo-img) {
+    display: none !important;
+}
+
+/* Our logo is injected as #ms-logo-img */
+#ms-logo-img {
+    display: block !important;
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto 10px auto;
+}
+
+/* Subtitle under logo */
+#ms-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
 }
 
 /* ================================================= */
 /* === SEARCH BAR ================================== */
 /* ================================================= */
 
-#q, 
+#search_form,
+.search_form,
+form[role="search"] {
+    position: relative;
+    z-index: 10;
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#q,
 .search_input,
 input[type="search"],
 input[name="q"] {
-    background: var(--ms-glass-bg) !important;
-    border: 1px solid var(--ms-glass-border) !important;
+    width: 100% !important;
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 50px !important;
-    color: var(--ms-text-primary) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important;
-    padding: 14px 24px !important;
-    transition: var(--ms-transition) !important;
-    backdrop-filter: var(--ms-glass-blur) !important;
-    -webkit-backdrop-filter: var(--ms-glass-blur) !important;
+    font-size: 1.05rem !important;
+    padding: 16px 28px !important;
+    transition: var(--transition-smooth) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-#q:focus,
-.search_input:focus,
-input[type="search"]:focus,
-input[name="q"]:focus {
-    border-color: var(--ms-purple) !important;
-    box-shadow: 0 0 0 3px rgba(140, 82, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
     outline: none !important;
 }
 
-#q::placeholder {
-    color: var(--ms-text-secondary) !important;
+#q:focus,
+input[name="q"]:focus {
+    border-color: var(--color-purple) !important;
+    box-shadow: 0 0 0 3px rgba(140, 82, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Search button */
+#q::placeholder,
+input[name="q"]::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* Search submit button */
 #send_search,
 .search_submit,
 button[type="submit"] {
-    background: var(--ms-gradient) !important;
+    background: var(--gradient-accent) !important;
     border: none !important;
     border-radius: 50px !important;
     color: white !important;
     font-weight: 600 !important;
     font-family: 'Inter', sans-serif !important;
     cursor: pointer !important;
-    transition: var(--ms-transition) !important;
+    transition: var(--transition-smooth) !important;
     box-shadow: 0 4px 15px rgba(140, 82, 255, 0.3) !important;
+    padding: 12px 28px !important;
+    font-size: 0.95rem !important;
 }
 
 #send_search:hover,
-.search_submit:hover,
 button[type="submit"]:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 25px rgba(255, 145, 77, 0.4) !important;
-}
-
-/* Search form container */
-#search_form,
-.search_form {
-    position: relative;
-    z-index: 10;
 }
 
 /* ================================================= */
@@ -175,84 +298,124 @@ button[type="submit"]:hover {
 .search_categories {
     background: transparent !important;
     border: none !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 20px !important;
+    padding: 0 !important;
 }
 
 #categories label,
 .category,
 .search_categories button,
-.categories a {
-    background: var(--ms-glass-bg) !important;
-    border: 1px solid var(--ms-glass-border) !important;
+.categories a,
+#categories a {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 20px !important;
-    color: var(--ms-text-secondary) !important;
+    color: var(--text-secondary) !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.85rem !important;
     font-weight: 500 !important;
     padding: 6px 16px !important;
-    margin: 4px !important;
-    transition: var(--ms-transition) !important;
+    margin: 0 !important;
+    transition: var(--transition-smooth) !important;
     backdrop-filter: blur(10px) !important;
+    cursor: pointer;
+    text-decoration: none !important;
 }
 
 #categories input:checked + label,
 .category.active,
-.search_categories button.active,
-.categories a.active,
-#categories label.active {
+#categories label.active,
+#categories a.active {
     background: rgba(140, 82, 255, 0.15) !important;
-    border-color: var(--ms-purple) !important;
-    color: var(--ms-purple) !important;
+    border-color: var(--color-purple) !important;
+    color: var(--color-purple) !important;
     box-shadow: 0 0 12px rgba(140, 82, 255, 0.2) !important;
 }
 
 #categories label:hover,
-.category:hover {
+#categories a:hover {
     border-color: rgba(140, 82, 255, 0.3) !important;
-    color: var(--ms-text-primary) !important;
+    color: var(--text-primary) !important;
     transform: translateY(-1px) !important;
 }
 
+/* Hide category checkbox inputs */
+#categories input[type="checkbox"],
+#categories input[type="radio"] {
+    display: none !important;
+}
+
 /* ================================================= */
-/* === RESULTS ===================================== */
+/* === RESULTS PAGE ================================ */
 /* ================================================= */
 
 #main_results,
 .result_header,
-#results {
+#results,
+#links,
+#links_wrapper,
+.search-container {
     background: transparent !important;
+    position: relative;
+    z-index: 1;
 }
 
-/* Each result item */
+/* Results wrapper */
+#urls,
+#main_results {
+    padding-top: calc(var(--nav-height) + 30px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+/* Individual result card — glass morphism */
 .result,
 .result-default,
 article.result {
-    background: var(--ms-glass-bg) !important;
-    backdrop-filter: var(--ms-glass-blur) !important;
-    -webkit-backdrop-filter: var(--ms-glass-blur) !important;
-    border: 1px solid var(--ms-glass-border) !important;
-    border-radius: var(--ms-radius) !important;
-    padding: 20px 24px !important;
-    margin-bottom: 12px !important;
-    transition: var(--ms-transition) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: var(--radius) !important;
+    padding: 24px 28px !important;
+    margin-bottom: 14px !important;
+    transition: var(--transition-smooth) !important;
     position: relative;
     overflow: hidden;
+    animation: fadeSlideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
+
+.result:nth-child(1) { animation-delay: 0s; }
+.result:nth-child(2) { animation-delay: 0.04s; }
+.result:nth-child(3) { animation-delay: 0.08s; }
+.result:nth-child(4) { animation-delay: 0.12s; }
+.result:nth-child(5) { animation-delay: 0.16s; }
+.result:nth-child(6) { animation-delay: 0.2s; }
+.result:nth-child(7) { animation-delay: 0.24s; }
+.result:nth-child(8) { animation-delay: 0.28s; }
+.result:nth-child(9) { animation-delay: 0.32s; }
+.result:nth-child(10) { animation-delay: 0.36s; }
 
 .result:hover,
-.result-default:hover,
 article.result:hover {
     border-color: rgba(140, 82, 255, 0.3) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 30px rgba(140, 82, 255, 0.08) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 40px rgba(140, 82, 255, 0.1) !important;
 }
 
-/* Glow effect on hover */
+/* Glow effect behind card on hover */
 .result::before,
 article.result::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--ms-gradient);
+    background: var(--gradient-accent);
     opacity: 0;
     z-index: -1;
     filter: blur(40px);
@@ -262,28 +425,28 @@ article.result::before {
 
 .result:hover::before,
 article.result:hover::before {
-    opacity: 0.06;
+    opacity: 0.08;
 }
 
-/* Result title / link */
+/* Result title */
 .result h3,
 .result .result_title,
-.result-default h3,
 h3.result_header a,
 .result_header a {
-    color: var(--ms-purple) !important;
+    color: var(--color-purple) !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.1rem !important;
+    font-size: 1.15rem !important;
     text-decoration: none !important;
-    transition: var(--ms-transition) !important;
+    transition: var(--transition-smooth) !important;
+    line-height: 1.3 !important;
 }
 
 .result h3:hover,
 .result h3 a:hover,
 h3.result_header a:hover,
 .result_header a:hover {
-    color: var(--ms-orange) !important;
+    color: var(--color-orange) !important;
 }
 
 /* Result URL */
@@ -291,41 +454,43 @@ h3.result_header a:hover,
 .result .result_url,
 .result .url,
 a.result_url {
-    color: var(--ms-text-secondary) !important;
+    color: var(--text-secondary) !important;
     font-size: 0.8rem !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 /* Result description */
 .result .content,
 .result p,
 .result .result_content {
-    color: var(--ms-text-primary) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
-    line-height: 1.6 !important;
+    line-height: 1.7 !important;
+    font-size: 0.92rem !important;
 }
 
-/* Result engines info */
-.result .engines,
-.result .result_engines,
-.result .stat {
-    color: var(--ms-text-secondary) !important;
-    font-size: 0.75rem !important;
-}
-
-/* Visited links */
+/* Visited */
 .result h3 a:visited,
 .result_header a:visited {
-    color: var(--ms-orange) !important;
+    color: var(--color-orange) !important;
 }
 
-/* Highlighted text in results */
+/* Highlighted text */
 .result .highlight,
 .result mark,
 .result b {
-    color: var(--ms-text-bright) !important;
+    color: var(--text-bright) !important;
     background: rgba(140, 82, 255, 0.1) !important;
     border-radius: 3px;
-    padding: 0 2px;
+    padding: 0 3px;
+}
+
+/* Engine badges */
+.result .engines,
+.result .result_engines,
+.result .stat {
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem !important;
 }
 
 /* ================================================= */
@@ -335,21 +500,16 @@ a.result_url {
 #sidebar,
 .sidebar,
 .infobox {
-    background: var(--ms-glass-bg) !important;
-    backdrop-filter: var(--ms-glass-blur) !important;
-    border: 1px solid var(--ms-glass-border) !important;
-    border-radius: var(--ms-radius) !important;
-    color: var(--ms-text-primary) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: var(--radius) !important;
+    color: var(--text-primary) !important;
+    padding: 20px !important;
 }
 
-.infobox h2,
-.infobox .title {
-    color: var(--ms-text-bright) !important;
-}
-
-.infobox a {
-    color: var(--ms-purple) !important;
-}
+.infobox h2, .infobox .title { color: var(--text-bright) !important; }
+.infobox a { color: var(--color-purple) !important; }
 
 /* ================================================= */
 /* === PAGINATION ================================== */
@@ -359,38 +519,40 @@ a.result_url {
 #pagination,
 .pagination {
     background: transparent !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin: 30px 0 !important;
 }
 
 .pager a,
 .pager .page-number,
 #pagination a,
-.pagination a,
 .btn {
-    background: var(--ms-glass-bg) !important;
+    background: var(--glass-bg) !important;
     backdrop-filter: blur(10px) !important;
-    border: 1px solid var(--ms-glass-border) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 12px !important;
-    color: var(--ms-text-primary) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
-    padding: 10px 20px !important;
-    transition: var(--ms-transition) !important;
+    padding: 12px 24px !important;
+    transition: var(--transition-smooth) !important;
     text-decoration: none !important;
+    font-weight: 500 !important;
 }
 
 .pager a:hover,
 #pagination a:hover,
-.pagination a:hover,
 .btn:hover {
-    border-color: var(--ms-purple) !important;
-    color: var(--ms-purple) !important;
+    border-color: var(--color-purple) !important;
+    color: var(--color-purple) !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 15px rgba(140, 82, 255, 0.2) !important;
 }
 
-/* Next/Previous with gradient */
 .pager .next a,
 #pagination .next a {
-    background: var(--ms-gradient) !important;
+    background: var(--gradient-accent) !important;
     border: none !important;
     color: white !important;
     font-weight: 600 !important;
@@ -406,134 +568,41 @@ a.result_url {
 .search_autocomplete {
     background: rgba(17, 17, 20, 0.95) !important;
     backdrop-filter: blur(30px) !important;
-    border: 1px solid var(--ms-glass-border) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 16px !important;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5) !important;
-    overflow: hidden;
+    overflow: hidden !important;
     margin-top: 8px !important;
 }
 
-#suggestions .autocomplete-item,
-.autocomplete .suggestion,
 .autocomplete li,
-.search_autocomplete li {
-    color: var(--ms-text-primary) !important;
+.autocomplete .suggestion,
+#suggestions .autocomplete-item {
+    color: var(--text-primary) !important;
     padding: 12px 20px !important;
-    transition: var(--ms-transition) !important;
+    transition: var(--transition-smooth) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
 }
 
-#suggestions .autocomplete-item:hover,
-.autocomplete .suggestion:hover,
 .autocomplete li:hover,
-.search_autocomplete li:hover,
+#suggestions .autocomplete-item:hover,
 #suggestions .autocomplete-item.active {
     background: rgba(140, 82, 255, 0.08) !important;
-    color: var(--ms-purple) !important;
+    color: var(--color-purple) !important;
 }
 
 /* ================================================= */
-/* === FOOTER ====================================== */
-/* ================================================= */
-
-footer, #footer, .footer,
-.searxng-footer {
-    background: var(--ms-bg-secondary) !important;
-    border-top: 1px solid var(--ms-glass-border) !important;
-    color: var(--ms-text-secondary) !important;
-    font-family: 'Inter', sans-serif !important;
-    padding: 40px 20px !important;
-    text-align: center !important;
-}
-
-footer a,
-.footer a,
-.searxng-footer a {
-    color: var(--ms-purple) !important;
-    text-decoration: none !important;
-    transition: var(--ms-transition) !important;
-}
-
-footer a:hover,
-.footer a:hover {
-    color: var(--ms-orange) !important;
-}
-
-/* Inject moritzsoft.de footer branding */
-footer::after,
-.searxng-footer::after {
-    content: 'moritzsoft.de • Rechtliches & Impressum: rechtliches.moritzsoft.de';
-    display: block;
-    margin-top: 16px;
-    font-size: 0.8rem;
-    color: var(--ms-text-secondary);
-}
-
-/* ================================================= */
-/* === SETTINGS PAGE =============================== */
-/* ================================================= */
-
-.preferences,
-#settings,
-.settings {
-    background: transparent !important;
-}
-
-table, .table {
-    border-collapse: separate !important;
-    border-spacing: 0 4px !important;
-}
-
-table tr,
-.settings-table tr {
-    background: var(--ms-glass-bg) !important;
-    border-radius: 8px !important;
-    transition: var(--ms-transition) !important;
-}
-
-table tr:hover,
-.settings-table tr:hover {
-    background: rgba(140, 82, 255, 0.04) !important;
-}
-
-table th {
-    color: var(--ms-text-bright) !important;
-    font-weight: 700 !important;
-    border-bottom: 1px solid var(--ms-glass-border) !important;
-}
-
-table td {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
-    color: var(--ms-text-primary) !important;
-}
-
-/* Toggle switches */
-input[type="checkbox"] {
-    accent-color: var(--ms-purple) !important;
-}
-
-/* Select dropdowns */
-select {
-    background: var(--ms-bg-secondary) !important;
-    border: 1px solid var(--ms-glass-border) !important;
-    border-radius: 8px !important;
-    color: var(--ms-text-primary) !important;
-    font-family: 'Inter', sans-serif !important;
-    padding: 8px 12px !important;
-}
-
-/* ================================================= */
-/* === ANSWERS / INSTANT ========================== */
+/* === ANSWER / INSTANT ============================ */
 /* ================================================= */
 
 .answer,
 .result-answer {
-    background: var(--ms-glass-bg) !important;
-    backdrop-filter: var(--ms-glass-blur) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
     border: 1px solid rgba(140, 82, 255, 0.2) !important;
-    border-radius: var(--ms-radius) !important;
+    border-radius: var(--radius) !important;
     padding: 24px !important;
-    color: var(--ms-text-bright) !important;
+    color: var(--text-bright) !important;
     margin-bottom: 16px !important;
 }
 
@@ -541,139 +610,182 @@ select {
 /* === IMAGE RESULTS =============================== */
 /* ================================================= */
 
-.image_result,
-.result-images .image_result {
+.image_result {
     border-radius: 12px !important;
     overflow: hidden !important;
-    border: 1px solid var(--ms-glass-border) !important;
-    transition: var(--ms-transition) !important;
+    border: 1px solid var(--glass-border) !important;
+    transition: var(--transition-smooth) !important;
 }
 
 .image_result:hover {
-    border-color: var(--ms-purple) !important;
-    transform: scale(1.02) !important;
+    border-color: var(--color-purple) !important;
+    transform: scale(1.03) !important;
     box-shadow: 0 8px 25px rgba(140, 82, 255, 0.15) !important;
+}
+
+/* ================================================= */
+/* === SETTINGS PAGE =============================== */
+/* ================================================= */
+
+.preferences, #settings, .settings {
+    background: transparent !important;
+    position: relative;
+    z-index: 1;
+    padding-top: calc(var(--nav-height) + 40px) !important;
+}
+
+table, .table {
+    border-collapse: separate !important;
+    border-spacing: 0 4px !important;
+}
+
+table tr {
+    background: var(--glass-bg) !important;
+    transition: var(--transition-smooth) !important;
+}
+
+table tr:hover {
+    background: rgba(140, 82, 255, 0.04) !important;
+}
+
+table th {
+    color: var(--text-bright) !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+
+table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    color: var(--text-primary) !important;
+}
+
+input[type="checkbox"] { accent-color: var(--color-purple) !important; }
+
+select {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 8px 12px !important;
+}
+
+/* ================================================= */
+/* === FOOTER — moritzsoft minimal ================= */
+/* ================================================= */
+
+/* Kill all default footer content */
+footer, #footer, .footer, .searxng-footer {
+    all: unset !important;
+    display: block !important;
+    background: var(--bg-secondary) !important;
+    padding: 50px 20px 30px !important;
+    margin-top: 80px !important;
+    border-top: 1px solid var(--glass-border) !important;
+    text-align: center !important;
+    font-family: 'Inter', sans-serif !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hide all default footer children */
+footer > *,
+.searxng-footer > * {
+    display: none !important;
+}
+
+/* Our footer content via ::after */
+footer::after,
+.searxng-footer::after {
+    content: none !important;
+}
+
+/* We inject #ms-footer via JS instead */
+#ms-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--glass-border);
+    padding: 50px 20px 30px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    z-index: 1;
+    margin-top: 80px;
+}
+
+#ms-footer .footer-legal p {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+#ms-footer .legal-link {
+    color: var(--color-purple);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition-smooth);
+}
+
+#ms-footer .legal-link:hover {
+    color: var(--color-orange) !important;
 }
 
 /* ================================================= */
 /* === SCROLLBAR =================================== */
 /* ================================================= */
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--ms-bg-main);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(140, 82, 255, 0.3);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--ms-purple);
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: rgba(140, 82, 255, 0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-purple); }
 
 /* ================================================= */
-/* === LINKS GLOBAL ================================ */
+/* === GLOBAL LINK STYLES ========================== */
 /* ================================================= */
 
-a {
-    color: var(--ms-purple) !important;
-    transition: var(--ms-transition) !important;
-}
-
-a:hover {
-    color: var(--ms-orange) !important;
-}
-
-a:visited {
-    color: var(--ms-orange) !important;
-}
+a { color: var(--color-purple) !important; transition: var(--transition-smooth) !important; }
+a:hover { color: var(--color-orange) !important; }
+a:visited { color: var(--color-orange) !important; }
 
 /* ================================================= */
-/* === Z-INDEX FIX FOR CANVAS ====================== */
+/* === ENGINE BADGES / MISC ======================== */
 /* ================================================= */
 
-#main_index,
-#main_results,
-.search_header,
-#search,
-main,
-footer,
-.searxng-footer,
-#links_wrapper,
-.index {
-    position: relative;
-    z-index: 1;
-}
-
-/* ================================================= */
-/* === MISC SEARXNG OVERRIDES ====================== */
-/* ================================================= */
-
-/* Remove default backgrounds on containers */
-#links,
-#links_wrapper,
-#main_index .title,
-#main_results .title,
-.search-container {
-    background: transparent !important;
-}
-
-/* Engine stats badges */
 .badge, .label {
     background: rgba(140, 82, 255, 0.15) !important;
-    color: var(--ms-purple) !important;
+    color: var(--color-purple) !important;
     border-radius: 12px !important;
     font-size: 0.75rem !important;
     padding: 2px 8px !important;
 }
 
-/* Keyboard shortcut hints */
 kbd {
-    background: var(--ms-bg-secondary) !important;
-    border: 1px solid var(--ms-glass-border) !important;
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 4px !important;
-    color: var(--ms-text-primary) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
 }
 
-/* Error messages */
 .error, .alert-error {
     background: rgba(255, 145, 77, 0.1) !important;
     border: 1px solid rgba(255, 145, 77, 0.3) !important;
-    border-radius: var(--ms-radius) !important;
-    color: var(--ms-orange) !important;
+    border-radius: var(--radius) !important;
+    color: var(--color-orange) !important;
 }
 
-/* Loading indicator */
-.loading-indicator,
-.loader {
+.loading-indicator, .loader {
     border-color: rgba(140, 82, 255, 0.2) !important;
-    border-left-color: var(--ms-purple) !important;
+    border-left-color: var(--color-purple) !important;
 }
 
 /* ================================================= */
-/* === RESPONSIVE ================================== */
+/* === Z-INDEX STACKING ============================ */
 /* ================================================= */
 
-@media (max-width: 768px) {
-    .result,
-    .result-default,
-    article.result {
-        padding: 16px 18px !important;
-        border-radius: 12px !important;
-    }
-
-    #q,
-    .search_input,
-    input[name="q"] {
-        font-size: 0.9rem !important;
-        padding: 12px 18px !important;
-    }
+#main_index, #main_results, main, #links_wrapper, .index {
+    position: relative;
+    z-index: 1;
 }
 
 /* ================================================= */
@@ -685,18 +797,44 @@ kbd {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.result,
-article.result {
-    animation: fadeSlideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
-}
+/* ================================================= */
+/* === RESPONSIVE ================================== */
+/* ================================================= */
 
-.result:nth-child(1) { animation-delay: 0s; }
-.result:nth-child(2) { animation-delay: 0.05s; }
-.result:nth-child(3) { animation-delay: 0.1s; }
-.result:nth-child(4) { animation-delay: 0.15s; }
-.result:nth-child(5) { animation-delay: 0.2s; }
-.result:nth-child(6) { animation-delay: 0.25s; }
-.result:nth-child(7) { animation-delay: 0.3s; }
-.result:nth-child(8) { animation-delay: 0.35s; }
-.result:nth-child(9) { animation-delay: 0.4s; }
-.result:nth-child(10) { animation-delay: 0.45s; }
+@media (max-width: 768px) {
+    #ms-nav {
+        top: auto !important;
+        bottom: 20px !important;
+        padding: 0 1.5rem !important;
+    }
+
+    #ms-nav .logo-text { display: none !important; }
+
+    #ms-nav .nav-links {
+        gap: 20px !important;
+        width: 100% !important;
+        justify-content: space-around !important;
+    }
+
+    #ms-nav .nav-links a { font-size: 0.85rem !important; }
+
+    #main_index, .index {
+        padding-top: 40px !important;
+    }
+
+    #ms-logo-img { height: 80px !important; }
+
+    .result, article.result {
+        padding: 18px 20px !important;
+        border-radius: 12px !important;
+    }
+
+    #q, input[name="q"] {
+        font-size: 0.95rem !important;
+        padding: 14px 20px !important;
+    }
+
+    #urls, #main_results {
+        padding-top: 20px !important;
+    }
+}
