@@ -1,0 +1,702 @@
+/*
+ * MoritzSoft Search - Full Visual Override
+ * Transforms SearXNG into the moritzsoft.de aesthetic
+ * 
+ * Colors: #08080a bg, #111114 cards, #8c52ff purple, #ff914d orange
+ * Style: Glassmorphism, Inter font, particle canvas background
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+
+/* ================================================= */
+/* === ROOT VARIABLES ============================== */
+/* ================================================= */
+
+:root {
+    --ms-bg-main: #08080a;
+    --ms-bg-secondary: #111114;
+    --ms-gradient: linear-gradient(135deg, #8c52ff 0%, #ff914d 100%);
+    --ms-purple: #8c52ff;
+    --ms-orange: #ff914d;
+    --ms-text-primary: #a6a6a6;
+    --ms-text-secondary: #75757a;
+    --ms-text-bright: #dedede;
+    --ms-glass-bg: rgba(255, 255, 255, 0.03);
+    --ms-glass-border: rgba(255, 255, 255, 0.08);
+    --ms-glass-blur: blur(20px);
+    --ms-transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --ms-radius: 16px;
+}
+
+/* ================================================= */
+/* === GLOBAL RESET ================================ */
+/* ================================================= */
+
+html, body {
+    background: var(--ms-bg-main) !important;
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    background-image: radial-gradient(circle at top right, rgba(140, 82, 255, 0.08), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(255, 145, 77, 0.04), transparent 40%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Particle canvas */
+#ms-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ================================================= */
+/* === HEADER / NAVBAR ============================= */
+/* ================================================= */
+
+.search_header,
+#search_header,
+nav,
+header,
+.navbar {
+    background: rgba(10, 10, 12, 0.6) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border-bottom: 1px solid var(--ms-glass-border) !important;
+    box-shadow: none !important;
+}
+
+/* SearXNG search form header area */
+#main_index, .index {
+    background: transparent !important;
+}
+
+/* ================================================= */
+/* === LOGO / BRANDING ============================= */
+/* ================================================= */
+
+/* Hide default SearXNG logo image and replace with text */
+.searxng-logo,
+#main_index .logo img,
+.index .logo img,
+.logo img {
+    display: none !important;
+}
+
+.logo, .searxng_logo {
+    position: relative;
+}
+
+.logo::after,
+.searxng_logo::after {
+    content: 'MoritzSoft Search';
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #75757a 0%, #75757a 40%, #8c52ff 40%, #ff914d 65%, #75757a 65%, #75757a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ================================================= */
+/* === SEARCH BAR ================================== */
+/* ================================================= */
+
+#q, 
+.search_input,
+input[type="search"],
+input[name="q"] {
+    background: var(--ms-glass-bg) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 50px !important;
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1rem !important;
+    padding: 14px 24px !important;
+    transition: var(--ms-transition) !important;
+    backdrop-filter: var(--ms-glass-blur) !important;
+    -webkit-backdrop-filter: var(--ms-glass-blur) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+#q:focus,
+.search_input:focus,
+input[type="search"]:focus,
+input[name="q"]:focus {
+    border-color: var(--ms-purple) !important;
+    box-shadow: 0 0 0 3px rgba(140, 82, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    outline: none !important;
+}
+
+#q::placeholder {
+    color: var(--ms-text-secondary) !important;
+}
+
+/* Search button */
+#send_search,
+.search_submit,
+button[type="submit"] {
+    background: var(--ms-gradient) !important;
+    border: none !important;
+    border-radius: 50px !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    cursor: pointer !important;
+    transition: var(--ms-transition) !important;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.3) !important;
+}
+
+#send_search:hover,
+.search_submit:hover,
+button[type="submit"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(255, 145, 77, 0.4) !important;
+}
+
+/* Search form container */
+#search_form,
+.search_form {
+    position: relative;
+    z-index: 10;
+}
+
+/* ================================================= */
+/* === CATEGORIES / TABS =========================== */
+/* ================================================= */
+
+#categories,
+.categories,
+.search_categories {
+    background: transparent !important;
+    border: none !important;
+}
+
+#categories label,
+.category,
+.search_categories button,
+.categories a {
+    background: var(--ms-glass-bg) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 20px !important;
+    color: var(--ms-text-secondary) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    padding: 6px 16px !important;
+    margin: 4px !important;
+    transition: var(--ms-transition) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+#categories input:checked + label,
+.category.active,
+.search_categories button.active,
+.categories a.active,
+#categories label.active {
+    background: rgba(140, 82, 255, 0.15) !important;
+    border-color: var(--ms-purple) !important;
+    color: var(--ms-purple) !important;
+    box-shadow: 0 0 12px rgba(140, 82, 255, 0.2) !important;
+}
+
+#categories label:hover,
+.category:hover {
+    border-color: rgba(140, 82, 255, 0.3) !important;
+    color: var(--ms-text-primary) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ================================================= */
+/* === RESULTS ===================================== */
+/* ================================================= */
+
+#main_results,
+.result_header,
+#results {
+    background: transparent !important;
+}
+
+/* Each result item */
+.result,
+.result-default,
+article.result {
+    background: var(--ms-glass-bg) !important;
+    backdrop-filter: var(--ms-glass-blur) !important;
+    -webkit-backdrop-filter: var(--ms-glass-blur) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: var(--ms-radius) !important;
+    padding: 20px 24px !important;
+    margin-bottom: 12px !important;
+    transition: var(--ms-transition) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.result:hover,
+.result-default:hover,
+article.result:hover {
+    border-color: rgba(140, 82, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 30px rgba(140, 82, 255, 0.08) !important;
+}
+
+/* Glow effect on hover */
+.result::before,
+article.result::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--ms-gradient);
+    opacity: 0;
+    z-index: -1;
+    filter: blur(40px);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.result:hover::before,
+article.result:hover::before {
+    opacity: 0.06;
+}
+
+/* Result title / link */
+.result h3,
+.result .result_title,
+.result-default h3,
+h3.result_header a,
+.result_header a {
+    color: var(--ms-purple) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    text-decoration: none !important;
+    transition: var(--ms-transition) !important;
+}
+
+.result h3:hover,
+.result h3 a:hover,
+h3.result_header a:hover,
+.result_header a:hover {
+    color: var(--ms-orange) !important;
+}
+
+/* Result URL */
+.result .url_wrapper,
+.result .result_url,
+.result .url,
+a.result_url {
+    color: var(--ms-text-secondary) !important;
+    font-size: 0.8rem !important;
+}
+
+/* Result description */
+.result .content,
+.result p,
+.result .result_content {
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+/* Result engines info */
+.result .engines,
+.result .result_engines,
+.result .stat {
+    color: var(--ms-text-secondary) !important;
+    font-size: 0.75rem !important;
+}
+
+/* Visited links */
+.result h3 a:visited,
+.result_header a:visited {
+    color: var(--ms-orange) !important;
+}
+
+/* Highlighted text in results */
+.result .highlight,
+.result mark,
+.result b {
+    color: var(--ms-text-bright) !important;
+    background: rgba(140, 82, 255, 0.1) !important;
+    border-radius: 3px;
+    padding: 0 2px;
+}
+
+/* ================================================= */
+/* === SIDEBAR / INFOBOX =========================== */
+/* ================================================= */
+
+#sidebar,
+.sidebar,
+.infobox {
+    background: var(--ms-glass-bg) !important;
+    backdrop-filter: var(--ms-glass-blur) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: var(--ms-radius) !important;
+    color: var(--ms-text-primary) !important;
+}
+
+.infobox h2,
+.infobox .title {
+    color: var(--ms-text-bright) !important;
+}
+
+.infobox a {
+    color: var(--ms-purple) !important;
+}
+
+/* ================================================= */
+/* === PAGINATION ================================== */
+/* ================================================= */
+
+.pager,
+#pagination,
+.pagination {
+    background: transparent !important;
+}
+
+.pager a,
+.pager .page-number,
+#pagination a,
+.pagination a,
+.btn {
+    background: var(--ms-glass-bg) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 12px !important;
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 10px 20px !important;
+    transition: var(--ms-transition) !important;
+    text-decoration: none !important;
+}
+
+.pager a:hover,
+#pagination a:hover,
+.pagination a:hover,
+.btn:hover {
+    border-color: var(--ms-purple) !important;
+    color: var(--ms-purple) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.2) !important;
+}
+
+/* Next/Previous with gradient */
+.pager .next a,
+#pagination .next a {
+    background: var(--ms-gradient) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.3) !important;
+}
+
+/* ================================================= */
+/* === AUTOCOMPLETE ================================ */
+/* ================================================= */
+
+#suggestions,
+.autocomplete,
+.search_autocomplete {
+    background: rgba(17, 17, 20, 0.95) !important;
+    backdrop-filter: blur(30px) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5) !important;
+    overflow: hidden;
+    margin-top: 8px !important;
+}
+
+#suggestions .autocomplete-item,
+.autocomplete .suggestion,
+.autocomplete li,
+.search_autocomplete li {
+    color: var(--ms-text-primary) !important;
+    padding: 12px 20px !important;
+    transition: var(--ms-transition) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+}
+
+#suggestions .autocomplete-item:hover,
+.autocomplete .suggestion:hover,
+.autocomplete li:hover,
+.search_autocomplete li:hover,
+#suggestions .autocomplete-item.active {
+    background: rgba(140, 82, 255, 0.08) !important;
+    color: var(--ms-purple) !important;
+}
+
+/* ================================================= */
+/* === FOOTER ====================================== */
+/* ================================================= */
+
+footer, #footer, .footer,
+.searxng-footer {
+    background: var(--ms-bg-secondary) !important;
+    border-top: 1px solid var(--ms-glass-border) !important;
+    color: var(--ms-text-secondary) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 40px 20px !important;
+    text-align: center !important;
+}
+
+footer a,
+.footer a,
+.searxng-footer a {
+    color: var(--ms-purple) !important;
+    text-decoration: none !important;
+    transition: var(--ms-transition) !important;
+}
+
+footer a:hover,
+.footer a:hover {
+    color: var(--ms-orange) !important;
+}
+
+/* Inject moritzsoft.de footer branding */
+footer::after,
+.searxng-footer::after {
+    content: 'moritzsoft.de • Rechtliches & Impressum: rechtliches.moritzsoft.de';
+    display: block;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--ms-text-secondary);
+}
+
+/* ================================================= */
+/* === SETTINGS PAGE =============================== */
+/* ================================================= */
+
+.preferences,
+#settings,
+.settings {
+    background: transparent !important;
+}
+
+table, .table {
+    border-collapse: separate !important;
+    border-spacing: 0 4px !important;
+}
+
+table tr,
+.settings-table tr {
+    background: var(--ms-glass-bg) !important;
+    border-radius: 8px !important;
+    transition: var(--ms-transition) !important;
+}
+
+table tr:hover,
+.settings-table tr:hover {
+    background: rgba(140, 82, 255, 0.04) !important;
+}
+
+table th {
+    color: var(--ms-text-bright) !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid var(--ms-glass-border) !important;
+}
+
+table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    color: var(--ms-text-primary) !important;
+}
+
+/* Toggle switches */
+input[type="checkbox"] {
+    accent-color: var(--ms-purple) !important;
+}
+
+/* Select dropdowns */
+select {
+    background: var(--ms-bg-secondary) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 8px !important;
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 8px 12px !important;
+}
+
+/* ================================================= */
+/* === ANSWERS / INSTANT ========================== */
+/* ================================================= */
+
+.answer,
+.result-answer {
+    background: var(--ms-glass-bg) !important;
+    backdrop-filter: var(--ms-glass-blur) !important;
+    border: 1px solid rgba(140, 82, 255, 0.2) !important;
+    border-radius: var(--ms-radius) !important;
+    padding: 24px !important;
+    color: var(--ms-text-bright) !important;
+    margin-bottom: 16px !important;
+}
+
+/* ================================================= */
+/* === IMAGE RESULTS =============================== */
+/* ================================================= */
+
+.image_result,
+.result-images .image_result {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    transition: var(--ms-transition) !important;
+}
+
+.image_result:hover {
+    border-color: var(--ms-purple) !important;
+    transform: scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(140, 82, 255, 0.15) !important;
+}
+
+/* ================================================= */
+/* === SCROLLBAR =================================== */
+/* ================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--ms-bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(140, 82, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ms-purple);
+}
+
+/* ================================================= */
+/* === LINKS GLOBAL ================================ */
+/* ================================================= */
+
+a {
+    color: var(--ms-purple) !important;
+    transition: var(--ms-transition) !important;
+}
+
+a:hover {
+    color: var(--ms-orange) !important;
+}
+
+a:visited {
+    color: var(--ms-orange) !important;
+}
+
+/* ================================================= */
+/* === Z-INDEX FIX FOR CANVAS ====================== */
+/* ================================================= */
+
+#main_index,
+#main_results,
+.search_header,
+#search,
+main,
+footer,
+.searxng-footer,
+#links_wrapper,
+.index {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================= */
+/* === MISC SEARXNG OVERRIDES ====================== */
+/* ================================================= */
+
+/* Remove default backgrounds on containers */
+#links,
+#links_wrapper,
+#main_index .title,
+#main_results .title,
+.search-container {
+    background: transparent !important;
+}
+
+/* Engine stats badges */
+.badge, .label {
+    background: rgba(140, 82, 255, 0.15) !important;
+    color: var(--ms-purple) !important;
+    border-radius: 12px !important;
+    font-size: 0.75rem !important;
+    padding: 2px 8px !important;
+}
+
+/* Keyboard shortcut hints */
+kbd {
+    background: var(--ms-bg-secondary) !important;
+    border: 1px solid var(--ms-glass-border) !important;
+    border-radius: 4px !important;
+    color: var(--ms-text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Error messages */
+.error, .alert-error {
+    background: rgba(255, 145, 77, 0.1) !important;
+    border: 1px solid rgba(255, 145, 77, 0.3) !important;
+    border-radius: var(--ms-radius) !important;
+    color: var(--ms-orange) !important;
+}
+
+/* Loading indicator */
+.loading-indicator,
+.loader {
+    border-color: rgba(140, 82, 255, 0.2) !important;
+    border-left-color: var(--ms-purple) !important;
+}
+
+/* ================================================= */
+/* === RESPONSIVE ================================== */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    .result,
+    .result-default,
+    article.result {
+        padding: 16px 18px !important;
+        border-radius: 12px !important;
+    }
+
+    #q,
+    .search_input,
+    input[name="q"] {
+        font-size: 0.9rem !important;
+        padding: 12px 18px !important;
+    }
+}
+
+/* ================================================= */
+/* === ANIMATIONS ================================== */
+/* ================================================= */
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result,
+article.result {
+    animation: fadeSlideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.result:nth-child(1) { animation-delay: 0s; }
+.result:nth-child(2) { animation-delay: 0.05s; }
+.result:nth-child(3) { animation-delay: 0.1s; }
+.result:nth-child(4) { animation-delay: 0.15s; }
+.result:nth-child(5) { animation-delay: 0.2s; }
+.result:nth-child(6) { animation-delay: 0.25s; }
+.result:nth-child(7) { animation-delay: 0.3s; }
+.result:nth-child(8) { animation-delay: 0.35s; }
+.result:nth-child(9) { animation-delay: 0.4s; }
+.result:nth-child(10) { animation-delay: 0.45s; }

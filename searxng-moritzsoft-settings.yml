@@ -3,7 +3,7 @@
 
 general:
   debug: false
-  instance_name: "Moritzsoft Search"
+  instance_name: "MoritzSoft Search"
   privacypolicy_url: https://rechtliches.moritzsoft.de
   donation_url: false
   contact_url: false
