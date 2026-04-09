@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 40" role="img" aria-label="MoritzSoft Search">
+  <defs>
+    <linearGradient id="msGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8c52ff"/>
+      <stop offset="100%" style="stop-color:#ff914d"/>
+    </linearGradient>
+  </defs>
+  <text x="0" y="30" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="900" letter-spacing="-0.5">
+    <tspan fill="#75757a">Moritz</tspan><tspan fill="url(#msGrad)">Soft</tspan>
+    <tspan fill="#75757a" dx="8">Search</tspan>
+  </text>
+</svg>

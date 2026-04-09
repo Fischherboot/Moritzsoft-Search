@@ -1,13 +1,13 @@
 services:
-  searxng-rama:
+  moritzsoft-search:
     build:
       context: .
       dockerfile: Dockerfile
-    image: searxng-rama:latest
+    image: moritzsoft-search:latest
     ports:
       - "8855:8855"
     restart: unless-stopped
 
 networks:
   default:
-    name: searxng-rama-network
+    name: moritzsoft-search-network

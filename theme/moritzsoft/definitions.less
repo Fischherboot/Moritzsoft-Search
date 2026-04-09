@@ -1,0 +1,307 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+/*
+ * MoritzSoft Search Theme for SearXNG
+ * Based on the moritzsoft.de website design
+ *
+ * Moritzsoft color palette:
+ * - Background: #08080a (deep black)
+ * - Secondary: #111114 (card bg)
+ * - Purple accent: #8c52ff
+ * - Orange accent: #ff914d
+ * - Text primary: #a6a6a6
+ * - Text secondary: #75757a
+ * - Glass border: rgba(255,255,255,0.08)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+/// MoritzSoft Dark Theme (Default)
+:root {
+  /// Typography
+  --font-display: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Courier New", monospace;
+
+  /// Base Colors
+  --color-base-font: #a6a6a6;
+  --color-base-font-rgb: 166, 166, 166;
+  --color-base-background: #08080a;
+  --color-base-background-mobile: #08080a;
+  --color-url-font: #8c52ff;
+  --color-url-visited-font: #ff914d;
+  /// Header Colors
+  --color-header-background: #08080a;
+  --color-header-border: rgba(255, 255, 255, 0.08);
+  /// Footer Colors
+  --color-footer-background: #111114;
+  --color-footer-border: rgba(255, 255, 255, 0.08);
+  /// Sidebar Colors
+  --color-sidebar-border: rgba(255, 255, 255, 0.08);
+  --color-sidebar-font: #a6a6a6;
+  --color-sidebar-background: rgba(255, 255, 255, 0.03);
+  /// BackToTop Colors
+  --color-backtotop-font: #a6a6a6;
+  --color-backtotop-border: rgba(255, 255, 255, 0.08);
+  --color-backtotop-background: #111114;
+  /// Button Colors
+  --color-btn-background: #8c52ff;
+  --color-btn-font: #ffffff;
+  --color-show-btn-background: #75757a;
+  --color-show-btn-font: #08080a;
+  /// Search Input Colors
+  --color-search-border: rgba(255, 255, 255, 0.08);
+  --color-search-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --color-search-background: rgba(255, 255, 255, 0.03);
+  --color-search-font: #a6a6a6;
+  --color-search-background-hover: #8c52ff;
+  /// Modal Colors
+  --color-error: #ff914d;
+  --color-error-background: rgba(255, 145, 77, 0.15);
+  --color-warning: #ff914d;
+  --color-warning-background: rgba(255, 145, 77, 0.1);
+  --color-success: #42db34;
+  --color-success-background: rgba(66, 219, 52, 0.1);
+  /// Categories Colors
+  --color-categories-item-selected-font: #8c52ff;
+  --color-categories-item-border-selected: #8c52ff;
+  /// Autocomplete Colors
+  --color-autocomplete-font: #a6a6a6;
+  --color-autocomplete-border: rgba(255, 255, 255, 0.08);
+  --color-autocomplete-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --color-autocomplete-background: #111114;
+  --color-autocomplete-background-hover: rgba(140, 82, 255, 0.08);
+  /// Answer Colors
+  --color-answer-font: #a6a6a6;
+  --color-answer-background: #111114;
+  // colors of the KeyValue result class
+  --color-result-keyvalue-col-table: #08080a;
+  --color-result-keyvalue-odd: #08080a;
+  --color-result-keyvalue-even: #111114;
+  /// Results Colors
+  --color-result-background: rgba(255, 255, 255, 0.03);
+  --color-result-border: rgba(255, 255, 255, 0.08);
+  --color-result-url-font: #75757a;
+  --color-result-vim-selected: rgba(140, 82, 255, 0.08);
+  --color-result-vim-arrow: #8c52ff;
+  --color-result-description-highlight-font: #dedede;
+  --color-result-link-font: #8c52ff;
+  --color-result-link-font-highlight: #ff914d;
+  --color-result-link-visited-font: #ff914d;
+  --color-result-publishdate-font: #75757a;
+  --color-result-engines-font: #75757a;
+  --color-result-search-url-border: rgba(255, 255, 255, 0.08);
+  --color-result-search-url-font: #75757a;
+  /// Detail modal
+  --color-result-detail-font: #a6a6a6;
+  --color-result-detail-label-font: #75757a;
+  --color-result-detail-background: #08080a;
+  --color-result-detail-hr: rgba(255, 255, 255, 0.08);
+  --color-result-detail-link: #8c52ff;
+  --color-result-detail-loader-border: rgba(255, 255, 255, 0.1);
+  --color-result-detail-loader-borderleft: transparent;
+  // Images Colors
+  --color-result-image-span-font: #a6a6a6;
+  --color-result-image-span-font-selected: #08080a;
+  --color-result-image-background: #08080a;
+  /// Settings Colors
+  --color-settings-tr-hover: rgba(140, 82, 255, 0.06);
+  --color-settings-engine-description-font: #75757a;
+  --color-settings-table-group-background: #111114;
+  /// Toolkit Colors
+  --color-toolkit-badge-font: #a6a6a6;
+  --color-toolkit-badge-background: #75757a;
+  --color-toolkit-kbd-font: #08080a;
+  --color-toolkit-kbd-background: #a6a6a6;
+  --color-toolkit-dialog-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-dialog-background: #08080a;
+  --color-toolkit-tabs-label-border: #08080a;
+  --color-toolkit-tabs-section-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-select-background: #111114;
+  --color-toolkit-select-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-select-background-hover: rgba(140, 82, 255, 0.08);
+  --color-toolkit-input-text-font: #a6a6a6;
+  --color-toolkit-checkbox-onoff-off-background: #111114;
+  --color-toolkit-checkbox-onoff-on-background: #111114;
+  --color-toolkit-checkbox-onoff-on-mark-background: #8c52ff;
+  --color-toolkit-checkbox-onoff-on-mark-color: #ffffff;
+  --color-toolkit-checkbox-onoff-off-mark-background: #75757a;
+  --color-toolkit-checkbox-onoff-off-mark-color: #08080a;
+  --color-toolkit-checkbox-label-background: #08080a;
+  --color-toolkit-checkbox-label-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-checkbox-input-border: #8c52ff;
+  --color-toolkit-engine-tooltip-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-engine-tooltip-background: #08080a;
+  --color-toolkit-loader-border: rgba(255, 255, 255, 0.1);
+  --color-toolkit-loader-borderleft: transparent;
+  --color-doc-code: #a6a6a6;
+  --color-doc-code-background: #111114;
+  // Favicons Colors
+  --color-favicon-background-color: #75757a;
+  --color-favicon-border-color: rgba(255, 255, 255, 0.08);
+  /// Other misc colors
+  --color-bar-chart-primary: #8c52ff;
+  --color-bar-chart-secondary: #ff914d;
+  --color-image-resolution-background: rgba(0, 0, 0, 0.6);
+  --color-image-resolution-font: #a6a6a6;
+  --color-loading-indicator: rgba(255, 255, 255, 0.1);
+  --color-loading-indicator-gap: #a6a6a6;
+  --color-line-number: #75757a;
+}
+
+.dark-themes() {
+  // Moritzsoft theme IS dark - repeat values
+  --color-base-font: #a6a6a6;
+  --color-base-font-rgb: 166, 166, 166;
+  --color-base-background: #08080a;
+  --color-base-background-mobile: #08080a;
+  --color-url-font: #8c52ff;
+  --color-url-visited-font: #ff914d;
+  --color-header-background: #08080a;
+  --color-header-border: rgba(255, 255, 255, 0.08);
+  --color-footer-background: #111114;
+  --color-footer-border: rgba(255, 255, 255, 0.08);
+  --color-sidebar-border: rgba(255, 255, 255, 0.08);
+  --color-sidebar-font: #a6a6a6;
+  --color-sidebar-background: rgba(255, 255, 255, 0.03);
+  --color-backtotop-font: #a6a6a6;
+  --color-backtotop-border: rgba(255, 255, 255, 0.08);
+  --color-backtotop-background: #111114;
+  --color-btn-background: #8c52ff;
+  --color-btn-font: #ffffff;
+  --color-show-btn-background: #75757a;
+  --color-show-btn-font: #08080a;
+  --color-search-border: rgba(255, 255, 255, 0.08);
+  --color-search-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --color-search-background: rgba(255, 255, 255, 0.03);
+  --color-search-font: #a6a6a6;
+  --color-search-background-hover: #8c52ff;
+  --color-error: #ff914d;
+  --color-error-background: rgba(255, 145, 77, 0.15);
+  --color-warning: #ff914d;
+  --color-warning-background: rgba(255, 145, 77, 0.1);
+  --color-success: #42db34;
+  --color-success-background: rgba(66, 219, 52, 0.1);
+  --color-categories-item-selected-font: #8c52ff;
+  --color-categories-item-border-selected: #8c52ff;
+  --color-autocomplete-font: #a6a6a6;
+  --color-autocomplete-border: rgba(255, 255, 255, 0.08);
+  --color-autocomplete-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --color-autocomplete-background: #111114;
+  --color-autocomplete-background-hover: rgba(140, 82, 255, 0.08);
+  --color-answer-font: #a6a6a6;
+  --color-answer-background: #111114;
+  --color-result-keyvalue-col-table: #08080a;
+  --color-result-keyvalue-odd: #08080a;
+  --color-result-keyvalue-even: #111114;
+  --color-result-background: rgba(255, 255, 255, 0.03);
+  --color-result-border: rgba(255, 255, 255, 0.08);
+  --color-result-url-font: #75757a;
+  --color-result-vim-selected: rgba(140, 82, 255, 0.08);
+  --color-result-vim-arrow: #8c52ff;
+  --color-result-description-highlight-font: #dedede;
+  --color-result-link-font: #8c52ff;
+  --color-result-link-font-highlight: #ff914d;
+  --color-result-link-visited-font: #ff914d;
+  --color-result-publishdate-font: #75757a;
+  --color-result-engines-font: #75757a;
+  --color-result-search-url-border: rgba(255, 255, 255, 0.08);
+  --color-result-search-url-font: #75757a;
+  --color-result-detail-font: #a6a6a6;
+  --color-result-detail-label-font: #75757a;
+  --color-result-detail-background: #08080a;
+  --color-result-detail-hr: rgba(255, 255, 255, 0.08);
+  --color-result-detail-link: #8c52ff;
+  --color-result-detail-loader-border: rgba(255, 255, 255, 0.1);
+  --color-result-detail-loader-borderleft: transparent;
+  --color-result-image-span-font: #a6a6a6;
+  --color-result-image-span-font-selected: #08080a;
+  --color-result-image-background: #08080a;
+  --color-settings-tr-hover: rgba(140, 82, 255, 0.06);
+  --color-settings-engine-description-font: #75757a;
+  --color-settings-table-group-background: #111114;
+  --color-toolkit-badge-font: #a6a6a6;
+  --color-toolkit-badge-background: #75757a;
+  --color-toolkit-kbd-font: #08080a;
+  --color-toolkit-kbd-background: #a6a6a6;
+  --color-toolkit-dialog-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-dialog-background: #08080a;
+  --color-toolkit-tabs-label-border: #08080a;
+  --color-toolkit-tabs-section-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-select-background: #111114;
+  --color-toolkit-select-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-select-background-hover: rgba(140, 82, 255, 0.08);
+  --color-toolkit-input-text-font: #a6a6a6;
+  --color-toolkit-checkbox-onoff-off-background: #111114;
+  --color-toolkit-checkbox-onoff-on-background: #111114;
+  --color-toolkit-checkbox-onoff-on-mark-background: #8c52ff;
+  --color-toolkit-checkbox-onoff-on-mark-color: #ffffff;
+  --color-toolkit-checkbox-onoff-off-mark-background: #75757a;
+  --color-toolkit-checkbox-onoff-off-mark-color: #08080a;
+  --color-toolkit-checkbox-label-background: #08080a;
+  --color-toolkit-checkbox-label-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-checkbox-input-border: #8c52ff;
+  --color-toolkit-engine-tooltip-border: rgba(255, 255, 255, 0.08);
+  --color-toolkit-engine-tooltip-background: #08080a;
+  --color-toolkit-loader-border: rgba(255, 255, 255, 0.1);
+  --color-toolkit-loader-borderleft: transparent;
+  --color-doc-code: #a6a6a6;
+  --color-doc-code-background: #111114;
+  --color-favicon-background-color: #75757a;
+  --color-favicon-border-color: rgba(255, 255, 255, 0.08);
+}
+
+.black-themes() {
+  --color-base-background: #000000;
+  --color-base-background-mobile: #000000;
+  --color-header-background: #000000;
+  --color-footer-background: #050507;
+  --color-sidebar-background: #050507;
+}
+
+/// Dark Theme (autoswitch based on device pref)
+@media (prefers-color-scheme: dark) {
+  :root.theme-auto {
+    .dark-themes();
+  }
+}
+
+:root.theme-dark {
+  .dark-themes();
+}
+
+:root.theme-black {
+  .dark-themes();
+  .black-themes();
+}
+
+/// General Size
+@results-width: 45rem;
+@results-sidebar-width: 25rem;
+@results-offset: 10rem;
+@results-tablet-offset: 0.5rem;
+@results-gap: 5rem;
+@results-margin: 0.125rem;
+@result-padding: 1rem;
+@results-image-row-height: 12rem;
+@results-image-row-height-phone: 10rem;
+@search-width: 44rem;
+@search-height: 13rem;
+@search-padding-horizontal: 0.5rem;
+
+/// Device Size
+@tablet: 79.75em;
+@phone: 50em;
+@small-phone: 35em;
+@ultra-small-phone: 20rem;
+
+/// From style.less
+@stacked-bar-chart: rgb(0, 0, 0);
+
+/// Load fonts from this directory.
+@icon-font-path: "../../../fonts/";
+@icon-font-name: "glyphicons-halflings-regular";
+@icon-font-svg-id: "glyphicons_halflingsregular";
+
+@select-light-svg-path: "../svg/select-light.svg";
+@select-dark-svg-path: "../svg/select-dark.svg";

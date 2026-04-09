@@ -1,0 +1,61 @@
+# MoritzSoft Search - SearXNG Settings
+# Based on searxng-rama, restyled for moritzsoft.de
+
+general:
+  debug: false
+  instance_name: "MoritzSoft Search"
+  privacypolicy_url: https://rechtliches.moritzsoft.de
+  donation_url: false
+  contact_url: false
+  enable_metrics: true
+
+brand:
+  new_issue_url: https://github.com/Fischherboot/searxng-moritzsoft/issues
+  docs_url: https://github.com/Fischherboot/searxng-moritzsoft
+  public_instances: false
+  wiki_url: false
+
+server:
+  port: 8855
+  bind_address: "0.0.0.0"
+  secret_key: "ultrasecretkey"  # Will be replaced by openssl rand -hex 32
+  limiter: false
+
+ui:
+  static_path: ""
+  default_locale: "de"
+  theme_args:
+    theme: simple
+    center_alignment: true
+    results_on_new_tab: false
+    infinite_scroll: false
+    advanced_search: true
+    query_in_title: true
+  infinite_scroll: false
+  results_on_new_tab: false
+  center_alignment: true
+  theme: simple
+  default_theme: simple
+
+search:
+  safe_search: 0
+  language: "de"
+  ban_time_on_fail: 5
+  max_ban_time_on_fail: 120
+
+outgoing:
+  request_timeout: 3.0
+  max_request_timeout: 10.0
+  useragent_suffix: ""
+  pool_connections: 100
+  pool_maxsize: 100
+  enable_http: true
+  enable_http2: true
+  retries: 0
+  max_redirects: 30
+
+redis:
+  url: false
+
+valkey:
+  url: false

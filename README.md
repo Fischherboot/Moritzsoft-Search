@@ -1,64 +1,48 @@
-![SearXNG RAMA Edition](brand/searxng.png)
+# MoritzSoft Search
 
-SearXNG fork with a custom theme and privacy-first defaults out of the box.
+SearXNG fork mit dem moritzsoft.de Design. Basiert auf [searxng-RAMA](https://github.com/Nomadcxx/searxng-RAMA).
 
 ## Features
 
-- Custom RAMA color scheme (space cadet blue #2b2d42, pantone red #ef233c)
-- Static assets included
-- TUI installer handles everything
-- Generates secure keys automatically, uses center alignment
+- moritzsoft.de Farbschema (#08080a Background, #8c52ff Purple, #ff914d Orange)
+- Glassmorphism-inspirierte UI
+- Inter Font
+- Datenschutz-Link auf rechtliches.moritzsoft.de
+- Deutsche Locale als Default
+- Port 8855
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0;">
-  <img src="brand/screenshot.png" alt="SearXNG RAMA Main" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"/>
-</div>
-  
-## Installation
+## Quick Start (Docker)
 
-### Arch Linux (AUR)
-```bash
-yay -S searxng-rama
-# or
-paru -S searxng-rama
-```
-
-After installation, start and enable the service:
-```bash
-sudo systemctl start searxng-rama.service
-sudo systemctl enable searxng-rama.service
-```
-
-### Quick Install Script
-```bash
-curl -fsSL https://raw.githubusercontent.com/Nomadcxx/searxng-RAMA/main/install.sh | sudo bash
-```
-
-### Manual Build
-```bash
-git clone https://github.com/Nomadcxx/searxng-RAMA.git
-cd searxng-RAMA
-go build -o rama-installer ./cmd/rama-installer/
-sudo ./rama-installer
-```
-
-### Docker Installation
-```bash
-docker run -d --name searxng-rama -p 8855:8855 ghcr.io/nomadcxx/searxng-rama:latest
-```
-
-### Docker Compose Installation
 ```bash
 docker-compose up -d
 ```
 
-## Installation Details
+Dann erreichbar unter http://localhost:8855
 
-The installer copies everything to `/opt/searxng-rama`, sets up a virtual environment, installs dependencies, generates a secret key, and configures the service to run on port 8855. Once done, visit <http://localhost:8855>.
+## Manuell bauen
 
-## Uninstallation
+```bash
+git clone https://github.com/Fischherboot/searxng-moritzsoft.git
+cd searxng-moritzsoft
+docker build -t moritzsoft-search .
+docker run -d -p 8855:8855 moritzsoft-search
+```
 
-Run the installer again and choose uninstall. It'll stop the service and clean up `/opt/searxng-rama`.
+## Dateien
 
-## Requirements
+| Datei | Was es tut |
+|-------|------------|
+| `theme/moritzsoft/definitions.less` | Alle Farben/CSS-Variablen im moritzsoft.de Style |
+| `brand/searxng.svg` | Logo: Moritz(grau)Soft(gradient) Search(grau) |
+| `assets/favicon.svg` | Lila Lupe als Favicon |
+| `searxng-moritzsoft-settings.yml` | Settings mit moritzsoft Branding |
+| `scripts/bootstrap-docker.sh` | Docker-Bootstrap |
 
-- Go 1.21 or later
+## Links
+
+- [moritzsoft.de](https://moritzsoft.de)
+- [Rechtliches & Impressum](https://rechtliches.moritzsoft.de)
+
+## Lizenz
+
+AGPL-3.0 (SearXNG) + MSOL (Moritzsoft Branding)

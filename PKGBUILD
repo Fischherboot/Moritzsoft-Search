@@ -1,29 +1,27 @@
-# Maintainer: Nomadcxx <noovie@gmail.com>
-pkgname=searxng-rama
+# Maintainer: Moritz Nickel <moritz@onlymoritz.de>
+pkgname=searxng-moritzsoft
 _pkgname=searxng
 pkgver=r9135.8bf600c
-pkgrel=3
-pkgdesc="SearXNG with a modern theme, secure defaults and systemd service"
+pkgrel=1
+pkgdesc="SearXNG with moritzsoft.de theme and branding"
 arch=('any')
-url="https://github.com/Nomadcxx/searxng-RAMA"
+url="https://github.com/Fischherboot/searxng-moritzsoft"
 license=('AGPL3')
 depends=('python' 'systemd')
 makedepends=('openssl' 'git' 'python-virtualenv' 'npm' 'gcc' 'make' 'libvips' 'python' 'pkgconf')
 optdepends=(
-    'redis: Caching support for improved performance'
-    'valkey: Alternative caching support'
-    'libmagic: File type detection for uploads'
-    'p7zip: Archive support for file upload'
+    'redis: Caching support'
+    'valkey: Alternative caching'
 )
 provides=('searxng')
-conflicts=('searx' 'searx-git' 'searxng')
-backup=('opt/searxng-rama/searx/settings.yml')
+conflicts=('searx' 'searx-git' 'searxng' 'searxng-rama')
+backup=('opt/searxng-moritzsoft/searx/settings.yml')
 install=${pkgname}.install
 
 _giturl="https://github.com/searxng/searxng"
 _gitbranch="master"
 source=(git+$_giturl#branch=$_gitbranch
-        git+https://github.com/Nomadcxx/searxng-RAMA.git)
+        git+https://github.com/Fischherboot/searxng-moritzsoft.git)
 b2sums=('SKIP' 'SKIP')
 
 pkgver() {
@@ -34,78 +32,42 @@ pkgver() {
 build() {
   cd "$srcdir/$_pkgname"
 
-  # Apply RAMA theme customizations to source
-  msg2 "Applying RAMA theme customizations..."
+  msg2 "Applying MoritzSoft theme..."
+  cp "${srcdir}/searxng-moritzsoft/theme/moritzsoft/definitions.less" "client/simple/src/less/definitions.less"
 
-  # Copy RAMA definitions.less to client source (this is where theme is built from)
-  cp "${srcdir}/searxng-RAMA/theme/rama/definitions.less" "client/simple/src/less/definitions.less"
-
-  # Copy RAMA branding assets to client source BEFORE building (vite generates assets from these)
-  msg2 "Installing RAMA branding assets to client source..."
-
-  # Ensure brand directory exists
   mkdir -p "client/simple/src/brand"
 
-  # Create a minimal placeholder searxng.svg (vite plugin needs this, but we'll overwrite PNG after build)
-  # This prevents vite build from failing if searxng.svg is missing
-  cat > "client/simple/src/brand/searxng.svg" << 'EOF'
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20">
-  <text x="5" y="15" font-family="monospace" font-size="12" fill="#ef233c">SEARXNG</text>
-</svg>
-EOF
+  # Minimal placeholder SVG for vite build
+  cp "${srcdir}/searxng-moritzsoft/brand/searxng.svg" "client/simple/src/brand/searxng.svg"
 
-  # Copy RAMA red favicon SVG - vite will generate favicon.png and favicon.svg from this
-  if [ -f "${srcdir}/searxng-RAMA/assets/favicon.svg" ]; then
-    cp "${srcdir}/searxng-RAMA/assets/favicon.svg" "client/simple/src/brand/searxng-wordmark.svg"
+  if [ -f "${srcdir}/searxng-moritzsoft/assets/favicon.svg" ]; then
+    cp "${srcdir}/searxng-moritzsoft/assets/favicon.svg" "client/simple/src/brand/searxng-wordmark.svg"
   fi
 
-  # Copy empty favicon SVG to source (vite plugin processes this)
-  if [ -f "${srcdir}/searxng-RAMA/assets/empty_favicon.svg" ]; then
+  if [ -f "${srcdir}/searxng-moritzsoft/assets/empty_favicon.svg" ]; then
     mkdir -p "client/simple/src/svg"
-    cp "${srcdir}/searxng-RAMA/assets/empty_favicon.svg" "client/simple/src/svg/empty_favicon.svg"
+    cp "${srcdir}/searxng-moritzsoft/assets/empty_favicon.svg" "client/simple/src/svg/empty_favicon.svg"
   fi
 
-  # Build the theme with RAMA styling
-  msg2 "Building RAMA theme..."
+  msg2 "Building theme..."
   cd client/simple
-
-  # Install npm dependencies - skip postinstall scripts to avoid sharp native build issues
   npm install --no-audit --no-fund --ignore-scripts
-
-  # Build only the vite part (CSS compilation) - skip icons which needs sharp
   npx vite build
-
   cd "$srcdir/$_pkgname"
 
-  # Copy custom RAMA assets AFTER vite build (overwrite generated files)
-  msg2 "Installing custom RAMA logo and favicon..."
-
-  # Copy custom ASCII-style "SEARXNG" logo PNG (overwrites vite-generated searxng.png)
-  if [ -f "${srcdir}/searxng-RAMA/brand/searxng.png" ]; then
-    cp "${srcdir}/searxng-RAMA/brand/searxng.png" "searx/static/themes/simple/img/searxng.png"
+  # Copy custom assets AFTER vite build
+  if [ -f "${srcdir}/searxng-moritzsoft/assets/favicon.svg" ]; then
+    cp "${srcdir}/searxng-moritzsoft/assets/favicon.svg" "searx/static/themes/simple/img/favicon.svg"
   fi
 
-  # Copy red favicon files directly (ensure they're present)
-  if [ -f "${srcdir}/searxng-RAMA/assets/favicon.svg" ]; then
-    cp "${srcdir}/searxng-RAMA/assets/favicon.svg" "searx/static/themes/simple/img/favicon.svg"
+  if [ -f "${srcdir}/searxng-moritzsoft/assets/empty_favicon.svg" ]; then
+    cp "${srcdir}/searxng-moritzsoft/assets/empty_favicon.svg" "searx/static/themes/simple/img/empty_favicon.svg"
   fi
 
-  if [ -f "${srcdir}/searxng-RAMA/assets/favicon.png" ]; then
-    cp "${srcdir}/searxng-RAMA/assets/favicon.png" "searx/static/themes/simple/img/favicon.png"
-  fi
-
-  if [ -f "${srcdir}/searxng-RAMA/assets/empty_favicon.svg" ]; then
-    cp "${srcdir}/searxng-RAMA/assets/empty_favicon.svg" "searx/static/themes/simple/img/empty_favicon.svg"
-  fi
-
-  # Create version file
   cat > searx/version_frozen.py << EOF
-# THIS FILE IS GENERATED BY THE BUILD PROCESS
-# DO NOT EDIT IT MANUALLY
-
-VERSION_STRING = "1.0.0-RAMA"
-VERSION_TAG = "1.0.0-RAMA"
-DOCKER_TAG = "1.0.0-RAMA"
+VERSION_STRING = "1.0.0-moritzsoft"
+VERSION_TAG = "1.0.0-moritzsoft"
+DOCKER_TAG = "1.0.0-moritzsoft"
 GIT_URL = "${_giturl}"
 GIT_BRANCH = "${_gitbranch}"
 EOF
@@ -114,112 +76,68 @@ EOF
 package() {
   cd "$srcdir/$_pkgname"
 
-  # Create installation directory
-  install -dm755 "$pkgdir/opt/searxng-rama"
+  install -dm755 "$pkgdir/opt/searxng-moritzsoft"
+  cp -r searx "$pkgdir/opt/searxng-moritzsoft/"
 
-  # Copy SearXNG source files (includes built theme in searx/static/themes/simple/)
-  msg2 "Copying SearXNG files..."
-  cp -r searx "$pkgdir/opt/searxng-rama/"
-
-  # Copy additional directories if they exist
   for dir in dockerfiles docs utils; do
-    if [ -d "$dir" ]; then
-      cp -r "$dir" "$pkgdir/opt/searxng-rama/"
-    fi
+    [ -d "$dir" ] && cp -r "$dir" "$pkgdir/opt/searxng-moritzsoft/"
   done
 
-  # Copy essential files
   for file in Makefile manage requirements.txt requirements-dev.txt setup.py babel.cfg; do
-    if [ -f "$file" ]; then
-      install -Dm644 "$file" "$pkgdir/opt/searxng-rama/$file"
-    fi
+    [ -f "$file" ] && install -Dm644 "$file" "$pkgdir/opt/searxng-moritzsoft/$file"
   done
 
-  # Copy .git directory for version info
-  if [ -d ".git" ]; then
-    cp -r .git "$pkgdir/opt/searxng-rama/"
-  fi
+  [ -d ".git" ] && cp -r .git "$pkgdir/opt/searxng-moritzsoft/"
 
-  # RAMA assets already copied to source in build() and compiled by vite
-
-  # Modify settings.yml with RAMA defaults
   msg2 "Configuring settings..."
-  local settings_file="${pkgdir}/opt/searxng-rama/searx/settings.yml"
-
-  # Generate secret key
+  local settings_file="${pkgdir}/opt/searxng-moritzsoft/searx/settings.yml"
   local secret_key="$(openssl rand -hex 32)"
 
-  # Modify settings
   sed -i "s/secret_key: \"ultrasecretkey\"/secret_key: \"${secret_key}\"/" "$settings_file"
   sed -i "s/port: 8888/port: 8855/" "$settings_file"
   sed -i 's/bind_address: "127.0.0.1"/bind_address: "0.0.0.0"/' "$settings_file"
-  sed -i 's/instance_name: "SearXNG"/instance_name: "SearXNG RAMA Edition"/' "$settings_file"
+  sed -i 's/instance_name: "SearXNG"/instance_name: "MoritzSoft Search"/' "$settings_file"
 
-  # Create Python virtual environment
-  msg2 "Creating Python virtual environment..."
+  msg2 "Creating Python venv..."
   export PIP_DISABLE_PIP_VERSION_CHECK=1
   export PYTHONDONTWRITEBYTECODE=1
-  python -m venv "$pkgdir/opt/searxng-rama/venv"
+  python -m venv "$pkgdir/opt/searxng-moritzsoft/venv"
+  "$pkgdir/opt/searxng-moritzsoft/venv/bin/pip" install --upgrade pip wheel
+  "$pkgdir/opt/searxng-moritzsoft/venv/bin/pip" install -r "${srcdir}/${_pkgname}/requirements.txt"
 
-  # Install dependencies in venv
-  msg2 "Installing Python dependencies..."
-  "$pkgdir/opt/searxng-rama/venv/bin/pip" install --upgrade pip wheel
-  "$pkgdir/opt/searxng-rama/venv/bin/pip" install -r "${srcdir}/${_pkgname}/requirements.txt"
+  find "$pkgdir/opt/searxng-moritzsoft/venv/bin" -type f -exec sed -i "s|${pkgdir}||g" {} +
+  [ -f "$pkgdir/opt/searxng-moritzsoft/venv/pyvenv.cfg" ] && sed -i "s|${pkgdir}||g" "$pkgdir/opt/searxng-moritzsoft/venv/pyvenv.cfg"
+  find "$pkgdir/opt/searxng-moritzsoft/venv" -type f -name "*.py[co]" -delete
+  find "$pkgdir/opt/searxng-moritzsoft/venv" -type d -name "__pycache__" -delete
 
-  # Fix venv shebangs to use final install path (remove pkgdir prefix)
-  msg2 "Fixing virtual environment paths..."
-  find "$pkgdir/opt/searxng-rama/venv/bin" -type f -exec sed -i "s|${pkgdir}||g" {} +
-  if [ -f "$pkgdir/opt/searxng-rama/venv/pyvenv.cfg" ]; then
-    sed -i "s|${pkgdir}||g" "$pkgdir/opt/searxng-rama/venv/pyvenv.cfg"
-  fi
-
-  # Clean up bytecode
-  find "$pkgdir/opt/searxng-rama/venv" -type f -name "*.py[co]" -delete
-  find "$pkgdir/opt/searxng-rama/venv" -type d -name "__pycache__" -delete
-
-  # Create executable wrapper
-  msg2 "Creating wrapper script..."
   install -dm755 "$pkgdir/usr/bin"
-  cat > "$pkgdir/usr/bin/searxng-rama-run" << 'EOF'
+  cat > "$pkgdir/usr/bin/moritzsoft-search-run" << 'EOF'
 #!/bin/bash
-export SEARXNG_SETTINGS_PATH=/opt/searxng-rama/searx/settings.yml
-cd /opt/searxng-rama
-exec /opt/searxng-rama/venv/bin/python -m searx.webapp "$@"
+export SEARXNG_SETTINGS_PATH=/opt/searxng-moritzsoft/searx/settings.yml
+cd /opt/searxng-moritzsoft
+exec /opt/searxng-moritzsoft/venv/bin/python -m searx.webapp "$@"
 EOF
-  chmod +x "$pkgdir/usr/bin/searxng-rama-run"
+  chmod +x "$pkgdir/usr/bin/moritzsoft-search-run"
 
-  # Install systemd service
-  msg2 "Installing systemd service..."
   install -dm755 "${pkgdir}/etc/systemd/system"
-  cat > "${pkgdir}/etc/systemd/system/searxng-rama.service" << 'EOF'
+  cat > "${pkgdir}/etc/systemd/system/moritzsoft-search.service" << 'EOF'
 [Unit]
-Description=RAMA SearXNG
+Description=MoritzSoft Search
 After=network.target
 
 [Service]
 Type=simple
 User=searxng
-WorkingDirectory=/opt/searxng-rama
-Environment="SEARXNG_SETTINGS_PATH=/opt/searxng-rama/searx/settings.yml"
-ExecStart=/usr/bin/searxng-rama-run
+WorkingDirectory=/opt/searxng-moritzsoft
+Environment="SEARXNG_SETTINGS_PATH=/opt/searxng-moritzsoft/searx/settings.yml"
+ExecStart=/usr/bin/moritzsoft-search-run
 Restart=on-failure
 RestartSec=5
-
-# Permissions for database writes
-ReadWritePaths=/opt/searxng-rama
+ReadWritePaths=/opt/searxng-moritzsoft
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-  # Install licenses
   install -Dm644 "${srcdir}/${_pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  if [ -f "${srcdir}/searxng-RAMA/LICENSE" ]; then
-    install -Dm644 "${srcdir}/searxng-RAMA/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/RAMA_LICENSE"
-  fi
-
-  # Install documentation
-  if [ -f "${srcdir}/searxng-RAMA/README.md" ]; then
-    install -Dm644 "${srcdir}/searxng-RAMA/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-  fi
 }
